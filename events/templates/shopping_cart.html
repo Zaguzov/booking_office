@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} Ваши билеты {% endblock %}
+
+{% block content %}
+    <div class="container">
+           <h1> Ваши покупки</h1>
+            <div class="card-deck row">
+                {% for shopping_cart in page %}
+                    <div class="card mb-3 mt-1 mx-2 p-0 shadow-sm" style="width: 20em">
+                    <div class="card-body">
+                    <p class="card-text">
+                        <a href="{% url 'event' shopping_cart.ticket.event.id %}">
+                    <strong class="d-block text-gray-dark">{{ shopping_cart.ticket.event.name }}</strong>
+                        </a>
+                         <strong class="d-block text-gray-dark"> Кол-во купленных билетов:{{ shopping_cart.number_of_purchased_tickets }}</strong>
+                        <strong class="d-block text-gray-dark"> Цена купленных билетов:{% widthratio shopping_cart.number_of_purchased_tickets 1 shopping_cart.ticket.price %}  </strong>
+                    </p>
+                        <form method="post" action={% url 'delete_from_shopping_cart' shopping_cart.id %}>
+        {% csrf_token %}
+        {{ form }} <button type="submit" class="btn btn-primary">Отказаться от покупки</button>
+    </form>
+                    </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+    </div>
+
+        {% if page.has_other_pages %}
+            {% include "includes/paginator.html" with items=page paginator=paginator%}
+        {% endif %}
+
+{% endblock %}

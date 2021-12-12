@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}События категории {{ kind.name }}{% endblock %}
+{% block header %}{{ kind.name }}{% endblock %}
+
+{% block content %}
+<p>{{ kind.description| linebreaksbr}}</p>
+    <div class="card-deck row">
+    {% for event in page %}
+        {% include "event_card.html" with event=event%}
+    {% endfor %}
+    </div>
+
+    {% if page.has_other_pages %}
+        {% include "includes/paginator.html" with items=page paginator=paginator%}
+    {% endif %}
+
+{% endblock %}

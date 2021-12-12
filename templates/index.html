@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+           <h1>Последние события</h1>
+        {% load cache %}
+        {% cache 20 index page %}
+            <div class="card-deck row">
+                {% for event in page %}
+                    {% include "event_card.html" with event=event %}
+                {% endfor %}
+            </div>
+        {% endcache %}
+
+    </div>
+
+        {% if page.has_other_pages %}
+            {% include "includes/paginator.html" with items=page paginator=paginator%}
+        {% endif %}
+
+{% endblock %}

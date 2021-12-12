@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ location.name }}{% endblock %}
+{% block header %}{{ location.name }}{% endblock %}
+
+{% block content %}
+    <main role="main" class="container">
+
+    <div class="row align-items-start">
+        <div class="col-md-auto">
+    <div class="card mb-3 mt-1 mx-2 p-0 shadow-sm" style="width: 20em">
+
+
+  {% load thumbnail %}
+  {% thumbnail artist.image "960x960" crop="center" upscale=True as im %}
+  <img class="card-img" src="{{ im.url }}" />
+  {% endthumbnail %}
+
+  <div class="card-body">
+    <p class="card-text">
+          <strong class="d-block text-gray-dark">{{ artist.initials }}</strong>
+
+    </p></div>
+  </div>
+
+        </div><div class="col">
+    Описание: <strong class="d-block text-gray-dark">{{ artist.description }}</strong>
+
+    </div></div></main>
+    <div class="card-deck row">
+    {% for event in page %}
+        {% include "event_card.html" with event=event%}
+    {% endfor %}
+    </div>
+
+    {% if page.has_other_pages %}
+        {% include "includes/paginator.html" with items=page paginator=paginator%}
+    {% endif %}
+
+{% endblock %}

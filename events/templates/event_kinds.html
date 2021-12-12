@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Все категории{% endblock %}
+{% block header %}Все категории{% endblock %}
+{% block content %}
+
+    {% for kind in page %}
+        <a href="{% url 'kind' kind.name %}">
+          <strong class="d-block text-gray-dark">{{ kind.name }}</strong>
+      </a>
+    {% endfor %}
+
+{% endblock %}

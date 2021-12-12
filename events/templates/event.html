@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load user_filters %}
+{% block title %}Событие {{ event.name }}{% endblock %}
+{% block content %}
+
+
+<main role="main" class="container">
+
+    <div class="row align-items-start">
+        <div class="col-md-auto">
+                {% include "event_card.html" with event=event %}
+            Кол-во доступных билетов: {{ tickets.number_of_available_tickets }}
+     </div>
+
+        <div class="col">
+            <strong class="text-gray-dark">Описание: {{ event.description }}</strong>
+        </div>
+    </div>
+    <div class="card my-4">
+
+     <form method="post" action={% url 'add_to_shopping_cart' event.id %}>
+        {% csrf_token %}
+        {{ form }} Цена за билет:{{ tickets.price }} <button type="submit" class="btn btn-primary">Купить</button>
+         {% if form.subject.errors %}
+{% endif %}
+    </form>
+        </div>
+
+
+
+</main>
+
+{% endblock %}

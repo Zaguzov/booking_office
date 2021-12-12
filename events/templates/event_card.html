@@ -1,0 +1,31 @@
+<div class="card mb-3 mt-1 mx-2 p-0 shadow-sm" style="width: 20em">
+
+
+  {% load thumbnail %}
+  {% thumbnail event.image "960x960" crop="center" upscale=True as im %}
+  <img class="card-img" src="{{ im.url }}" />
+  {% endthumbnail %}
+
+  <div class="card-body">
+    <p class="card-text">
+      <a href="{% url 'event' event.id %}">
+          <strong class="d-block text-gray-dark">{{ event.name }}</strong>
+      </a>
+    </p>
+    Вид события: <a href="{% url 'kind' event.kind.name %}">
+      <strong class=" text-gray-dark">{{ event.kind.name }}</strong>
+    </a>
+      <p></p>Где:<a href="{% url 'location' event.location.name %}">
+      <strong class=" text-gray-dark">{{ event.location.name }}</strong>
+    </a>
+    <p></p>Выступающие: {% for artist in artists %}
+    <a href="{% url 'artist' artist.initials %}">
+      <strong class="d-block text-gray-dark">{{ artist.initials }}</strong>
+    </a>
+    {% endfor %}
+    <div class="d-flex justify-content-between align-items-center">
+      <small class="text-muted">Начало: {{ event.start_date }}</small>
+      <small class="text-muted">Окончание: {{ event.end_date }}</small>
+    </div>
+  </div>
+</div>
